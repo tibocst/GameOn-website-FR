@@ -10,7 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+const formData = document.querySelectorAll("div.formData");
 const modalBtnClose = document.querySelector(".close");
 
 // launch modal event
@@ -64,11 +64,7 @@ function validate() {
 
 function validateName(stringToTest, indice) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[indice];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+  const divFormData = document.querySelectorAll("div.formData")[indice];
         
   if(stringToTest.length >= 2) {
     if(stringToTest.replace(/\s/g, '').length != 0) {
@@ -78,63 +74,57 @@ function validateName(stringToTest, indice) {
         return true;
       }
       else {
-        divFormData.appendChild(errorP);
+        //ajout des attributs et des leurs contenu pour activer le css
+        divFormData.setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+        divFormData.setAttribute("data-error-visible", "true");
         return false;
       }
     }
     else {
-      divFormData.appendChild(errorP);
+      divFormData.setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+      divFormData.setAttribute("data-error-visible", "true");
       return false;
     }
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
 
 function validateEmail(emailToTest) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[2];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Email non valide.";
+  const divFormData = document.querySelectorAll("div.formData")[2];
 
   const regex = new RegExp("^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$");
   if(emailToTest.match(regex)) {
     return true;
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Email non valide.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
 
 function validateBirthDate(dateToTest) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[3];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Vous devez entrer votre date de naissance.";
+  const divFormData = document.querySelectorAll("div.formData")[3];
 
   if(!isNaN(Date.parse(dateToTest))) {
     return true;
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Vous devez entrer votre date de naissance.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
 
 function validateQuantity(numberToTest) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[4];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Vous devez choisir une option.";
+  const divFormData = document.querySelectorAll("div.formData")[4];
 
   //passage d'une string à un entier
   const number = Number(numberToTest);
@@ -143,41 +133,36 @@ function validateQuantity(numberToTest) {
     return true;
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Vous devez choisir une option.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
 
 function validateLocation(stringToTest) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[5];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Vous devez choisir une option.";
+  const divFormData = document.querySelectorAll("div.formData")[5];
 
   if(stringToTest === "New York" || stringToTest === "San Francisco" || stringToTest === "Seattle" || stringToTest === "Chicago" || stringToTest === "Boston" || stringToTest === "Portland") {
     return true;
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Vous devez choisir une option.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
 
 function validateCheckBox(testIfChecked) {
   // Récupération de l'élément du DOM
-  const divFormData = document.querySelectorAll(".formData")[6];
-  // Création d’une balise
-  const errorP = document.createElement("p");
-  //edit de son texte
-  errorP.innerText = "Vous devez vérifier que vous acceptez les termes et conditions.";
+  const divFormData = document.querySelectorAll("div.formData")[6];
 
   if(testIfChecked) {
     return true;
   }
   else {
-    divFormData.appendChild(errorP);
+    divFormData.setAttribute("data-error", "Vous devez vérifier que vous acceptez les termes et conditions.");
+    divFormData.setAttribute("data-error-visible", "true");
     return false;
   }
 }
@@ -186,9 +171,8 @@ function validateCheckBox(testIfChecked) {
 
 function removeError() {
   for(let i = 6 ; i >= 0; i--){
-    const divFormData = document.querySelectorAll("div.formData > p")[i];
-    if(typeof divFormData !== "undefined"){
-      divFormData.remove();
-    }
+    const divFormData = document.querySelectorAll("div.formData")[i];
+    divFormData.removeAttribute("data-error");
+    divFormData.removeAttribute("data-error-visible");
   }
 }
