@@ -39,10 +39,8 @@ function validate() {
   const location = document.forms["reserve"]["location"].value;
   const checkbox1 = document.forms["reserve"]["checkbox1"].checked;
 
-  //on retire l'affichage de toutes les anciennes erreurs potentielles
   removeError();
-  //on faire tourner toutes les fontions pour pouvoir afficher une erreur 
-  //sous chaque fonctions présentant une erreur et pas que la première trouvée
+  // passage par toutes les fonctions pour générer les erreurs
   const validateNameConst = validateName(firstName, 0);
   const validateNameConstBis = validateName(lastName, 1);
   const validateEmailConst = validateEmail(email);
@@ -52,8 +50,15 @@ function validate() {
   const validateLocationConst = validateLocation(location);
 
   if (validateNameConst && validateNameConstBis && validateEmailConst && validateQuantityConst && validateBirthDateConst && validateCheckBoxConst && validateLocationConst) {
-    console.log("reussi");
-    return true;
+    try {
+      removeValidateForm();
+    }
+    catch(err){
+      console.log(err);
+    }
+   
+    console.log("passérmv");
+    return false;
   }
   else {
     return false;
@@ -63,7 +68,7 @@ function validate() {
 // fonctions de test pour les champs
 
 function validateName(stringToTest, indice) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[indice];
         
   if(stringToTest.length >= 2) {
@@ -74,7 +79,7 @@ function validateName(stringToTest, indice) {
         return true;
       }
       else {
-        //ajout des attributs et des leurs contenu pour activer le css
+        // ajout des attributs et des leurs contenu
         divFormData.setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
         divFormData.setAttribute("data-error-visible", "true");
         return false;
@@ -94,7 +99,7 @@ function validateName(stringToTest, indice) {
 }
 
 function validateEmail(emailToTest) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[2];
 
   const regex = new RegExp("^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$");
@@ -109,7 +114,7 @@ function validateEmail(emailToTest) {
 }
 
 function validateBirthDate(dateToTest) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[3];
 
   if(!isNaN(Date.parse(dateToTest))) {
@@ -123,12 +128,12 @@ function validateBirthDate(dateToTest) {
 }
 
 function validateQuantity(numberToTest) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[4];
 
-  //passage d'une string à un entier
+  // passage d'une string à un entier
   const number = Number(numberToTest);
-  //si ce qui a été rentré n'est pas un entier, Number retournera NaN donc on test ce retour avec is NaN
+  // si number n'est pas un nombre/chiffre, Number retournera NaN
   if(!(isNaN(number)) && number >= 0 && number <= 99 && !(numberToTest === "")) {
     return true;
   }
@@ -140,7 +145,7 @@ function validateQuantity(numberToTest) {
 }
 
 function validateLocation(stringToTest) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[5];
 
   if(stringToTest === "New York" || stringToTest === "San Francisco" || stringToTest === "Seattle" || stringToTest === "Chicago" || stringToTest === "Boston" || stringToTest === "Portland") {
@@ -154,7 +159,7 @@ function validateLocation(stringToTest) {
 }
 
 function validateCheckBox(testIfChecked) {
-  // Récupération de l'élément du DOM
+  // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[6];
 
   if(testIfChecked) {
@@ -167,7 +172,7 @@ function validateCheckBox(testIfChecked) {
   }
 }
 
-// function pour retirer les affichages d'erreur avant de tester à nouveau les infos du form
+// retire les affichages d'erreur avant de tester à nouveau les infos du form
 
 function removeError() {
   for(let i = 6 ; i >= 0; i--){
@@ -176,3 +181,14 @@ function removeError() {
     divFormData.removeAttribute("data-error-visible");
   }
 }
+
+// retire tous les éléments du form et affiche la page après souscription
+
+function removeValidateForm() {
+  
+  const modalBody = document.querySelector(".modal-body");
+  console.log(modalBody);
+  modalBody.style.display = "none";
+  
+}
+
