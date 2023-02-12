@@ -50,14 +50,7 @@ function validate() {
   const validateLocationConst = validateLocation(location);
 
   if (validateNameConst && validateNameConstBis && validateEmailConst && validateQuantityConst && validateBirthDateConst && validateCheckBoxConst && validateLocationConst) {
-    try {
-      removeValidateForm();
-    }
-    catch(err){
-      console.log(err);
-    }
-   
-    console.log("passérmv");
+    removeValidateForm();
     return false;
   }
   else {
@@ -101,7 +94,7 @@ function validateName(stringToTest, indice) {
 function validateEmail(emailToTest) {
   // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[2];
-
+  //regex pour vérification du mail
   const regex = new RegExp("^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$");
   if(emailToTest.match(regex)) {
     return true;
@@ -182,13 +175,21 @@ function removeError() {
   }
 }
 
-// retire tous les éléments du form et affiche la page après souscription
+// retire tous les éléments du form et affiche la modale après validation
 
 function removeValidateForm() {
-  
-  const modalBody = document.querySelector(".modal-body");
-  console.log(modalBody);
+  const formValide = document.querySelector(".form-valide");
+  const modalBody = document.querySelector("form");
+  const formValideButton = document.querySelector(".form-valide button");
+
   modalBody.style.display = "none";
-  
+  formValide.style.display = "flex";
+
+  formValideButton.addEventListener("click", function () {
+    //affiche de nouveau le formulaire après avoir pressé le bouton fermer
+    modalbg.style.display = "none";
+    modalBody.style.display = "block";
+    formValide.style.display = "none";
+  }, false);
 }
 
