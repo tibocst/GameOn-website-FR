@@ -51,6 +51,8 @@ function validate() {
 
   if (validateNameConst && validateNameConstBis && validateEmailConst && validateQuantityConst && validateBirthDateConst && validateCheckBoxConst && validateLocationConst) {
     removeValidateForm();
+    const form = document.querySelector("form");
+    form.reset();
     return false;
   }
   else {
@@ -95,7 +97,7 @@ function validateEmail(emailToTest) {
   // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[2];
   //regex pour vérification du mail
-  const regex = new RegExp("^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$");
+  const regex = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{1,2}");
   if(emailToTest.match(regex)) {
     return true;
   }
