@@ -97,7 +97,7 @@ function validateEmail(emailToTest) {
   // récupération de l'élément du DOM
   const divFormData = document.querySelectorAll("div.formData")[2];
   //regex pour vérification du mail
-  const regex = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{1,2}");
+  const regex = new RegExp("^[a-z0-9]+@[a-z]+(\.[a-z]{2,3}){1,2}$");
   if(emailToTest.match(regex)) {
     return true;
   }
