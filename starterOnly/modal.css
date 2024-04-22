@@ -37,9 +37,8 @@ img {
 }
 
 .topnav {
-  overflow: hidden;
-    margin: 3.5%;
-    display: flex;
+  margin: 3.5%;
+  display: flex;
 }
 .header-logo {
     float: left;
@@ -472,6 +471,7 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit:cover;
 }
 .copyrights {
   color: #fe142f;
